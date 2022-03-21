@@ -1,0 +1,104 @@
+DATAFRAMES EN PANDAS
+
+Un DataFrame es simplemente una tabla con filas y columnas. Se puede hacer análisis estadísticos, visualizaciones, segmentaciones, filtros, etc.
+
+Creación de un DataFrame
+
+import pandas as pd
+import numpy as np
+
+# Creación de una DataFrame sencillo
+
+data = {"state":["Ohio","Ohio","Ohio","Nevada","Nevada","Nevada"], 
+        "year": [2000,2001,2002,2001,2002,2003], 
+        "pop": [1.5,1.7,3.6,2.4,2.9,3.2]}
+
+frame = pd.DataFrame(data)
+
+    state	year	pop
+0	Ohio	2000	1.5
+1	Ohio	2001	1.7
+2	Ohio	2002	3.6
+3	Nevada	2001	2.4
+4	Nevada	2002	2.9
+5	Nevada	2003	3.2
+
+Con pocas líneas de código se puede conocer y trabajar con datos como estos. En el ejemplo anterior estamos suponiendo que los datos están completos.
+
+Los DataFrames permiten utilizar métodos como .head(), .tail()
+
+Adicionalmente, podemos crear un DataFrame nombrando y ordenando las columnas como queramos:
+
+pd.DataFrame(data, columns = ["year","state","pop"]) # Con esto, se coloca el índice "year" antes del índice "state".
+
+	year	state	pop
+0	2000	Ohio	1.5
+1	2001	Ohio	1.7
+2	2002	Ohio	3.6
+3	2001	Nevada	2.4
+4	2002	Nevada	2.9
+5	2003	Nevada	3.2
+
+
+Crear un DataFrame a partir del anterior, añadiendo una columna y cambiando las etiquetas de los índices:
+
+frame2 = pd.DataFrame(data, columns =["year", "state", "pop", "debt"], index = ["one", "two", "three", "four", "five", "six"])
+
+        year	state	pop	    debt
+one	    2000	Ohio	1.5	    NaN
+two	    2001	Ohio	1.7	    NaN
+three	2002	Ohio	3.6	    NaN
+four	2001	Nevada	2.4	    NaN
+five	2002	Nevada	2.9	    NaN
+six	    2003	Nevada	3.2	    NaN
+
+
+frame2.columns # para ver qué columnas tiene el conjunto de datos frame2
+
+Index(['year', 'state', 'pop', 'debt'], dtype='object')
+
+
+Seleccionar columnas específicas:
+
+frame["state"]
+
+0      Ohio
+1      Ohio
+2      Ohio
+3    Nevada
+4    Nevada
+5    Nevada
+Name: state, dtype: object
+
+
+Rellenar con datos una columna:
+
+frame2["debt"] = 16.5
+
+        year	state	pop	    debt
+one	    2000	Ohio	1.5	    16.5
+two	    2001	Ohio	1.7	    16.5
+three	2002	Ohio	3.6	    16.5
+four	2001	Nevada	2.4	    16.5
+five	2002	Nevada	2.9	    16.5
+six	    2003	Nevada	3.2	    16.5
+
+De la forma anterior, todos los índices de esa columna se rellenan con 16.5
+
+
+Generar una secuencia desde el 0 al 5 con NumPy y .arange():
+
+frame2["debt"] = np.arange(6)
+frame2
+
+        year	state	pop	    debt
+one	    2000	Ohio	1.5	    0
+two	    2001	Ohio	1.7	    1
+three	2002	Ohio	3.6	    2
+four	2001	Nevada	2.4	    3  
+five	2002	Nevada	2.9	    4
+six	    2003	Nevada	3.2	    5
+
+
+
+

@@ -1,0 +1,75 @@
+==============================================
+TRABAJAR CON LOS DATOS FALTANTES EN UN DATASET
+==============================================
+
+Como científicos de datos, hay veces en que nos va a tocar elegir entre eliminar las filas sin datos o tratar de darle algún valor a los campos vacíos.
+
+import pandas as pd
+import numpy as np
+
+Importar archivo:
+
+titanic = pd.read_excel("/home/pedro/asdf/titanic3.xls")
+
+titanic.describe() # para mostrar estadísticas de las columnas con valores numéricos
+
+titanic.shape # muestra la forma del dataset (la cantidad de filas y columnas)
+(1309, 14)
+
+
+ELIMINAR FILAS CON NAN
+
+""" .dropna() elimina filas o columnas que contengan datos faltantes. El argumento axis se usa para especificar el eje, siendo 0 para filas y 1 para columnas. how = "all" elimina todas las filas que contenga todos sus datos faltantes"""
+
+titanic1 = titanic.dropna(axis = 0, how = "all)
+titanic1.shape
+(1309, 14)
+
+Dado que ninguna fila contiene solo datos faltantes, ninguna fue eliminada.
+
+El argumento how = "any" elimina todas las filas que tengan al menos un valor faltante
+
+titanic2 = titanic.dropna(axis = 0, how = "any")
+titanic.shape
+(0, 14)
+
+En el caso anterior, eliminó todas las filas, porque todas tienen al menos un valor faltante.
+
+===
+¿Cuándo conviene eliminar filas con datos faltantes? Tal vez valga la pena cuando sean pocas las filas que tengan datos faltanes, o sea, cuando sea un porcentaje muy bajo y no afecte al análisis en conjunto.
+===
+
+RELLENAR NAN
+
+Contar los registros faltantes dentro de la columna "age":
+
+pd.isnull(titanic["age"].values.ravel().sum())
+263
+
+Lo anterior muestra que hay 263 pasajeros cuya edad se desconoce.
+
+Para rellenar los valores faltantes con el promedio de los valores que se tienen:
+
+col = titanic["age"].fillna((titanic["age"]).mean())
+
+Los datos faltantes de "age" se rellenan con la edad promedio, que es 29.881135.
+
+En el caso anterior, al ser 263 de 1309 pasajeros, si se eliminaban esos registros, se perdería mucha información, así que valdría la pena rellenar los datos faltantes para no eliminar todos esos registros. Mientras más datos se mantengan, mejor.
+
+Crear una nueva columna en el dataset original:
+
+titanic1["new_age"] = col
+
+Se crea una columna que contiene los datos de edad más los datos rellenados, que están en la variable col.
+
+Descartar la columna "age", que ya no se necesita:
+
+titanic1 = titanic1[["pcclass", "survived", "name", "sex", "new_age", "sibsp", "parch", "ticket", "fare", "cabin", "embarked", "boat", "body", "home.dest"]]
+
+
+Los científicos de datos invierten mucho tiempo en la preparación de datos, como el ejemplo de tratar los datos faltantes de edad, donde hay que determinar si eliminar los datos faltantes o tratar de mantenerlos.
+
+
+
+
+

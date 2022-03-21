@@ -1,0 +1,183 @@
+Análisis a cerca de 18 mil jugadores con pandas
+
+Objetivo: conocer el potencial que tiene pandas
+
+# Importar librerí­as
+
+import pandas as pd
+import matplotlib.pyplot as plt
+
+# Importar el archivo
+
+fifa20 = pd.read_csv("players_20.csv")
+
+
+# Primeros 10 registros
+
+print(fifa20.head(10))
+
+
+# últimos 10 registros
+
+print(fifa20.tail(10))
+
+
+# Para mostrar la forma del dataset:
+
+print(fifa20.shape)
+
+
+# Mostrar los valores de las columnas
+
+print(fifa20.columns.values)
+
+
+# Estadísticas básicas del Dataset
+
+print(fifa20.describe())
+
+
+# Tipos de datos
+
+print(fifa20.dtypes)
+
+
+# Ejemplo para hacer el dataset más pequeño seleccionando las columas a mostrar
+
+fifa20_1 = fifa20[["short_name", "age", "height_cm", "weight_kg", "club",
+                   "overall", "potential", "value_eur", "wage_eur",
+                   "player_positions", "power_jumping", "power_long_shots"]]
+
+print(fifa20_1.head())
+
+
+# Hacer un dataset a partir del principal
+
+realmadrid = fifa20_1[fifa20_1["club"] == "Real Madrid"]
+print(realmadrid.shape)
+print("")
+print(realmadrid.head())
+print("")
+
+barcelona = fifa20_1[fifa20_1["club"] == "FC Barcelona"]
+print(barcelona.shape)
+print(barcelona.head())
+print("")
+
+
+
+# Uso de matplotlib para mostrar a los clubes con los mejores jugadores
+
+plt.figure()
+
+plt.subplot(121)
+plt.boxplot(realmadrid["overall"])
+plt.ylabel("Overall")
+plt.title("Real Madrid")
+plt.grid(True)
+
+plt.subplot(122)
+plt.boxplot(barcelona["overall"])
+plt.title("Barcelona")
+plt.grid(True)
+
+
+La comparación de los gráficos anteriores muestra que las calificaciones de los jugadores del FC Barcelona están más dispersas que las de los jugadores del Real Madrid. Las calificaciones del Real Madrid están más concentradas y tienden a mejores puntuaciones que en el FC Barcelona, pero aún no se puede obtener una conclusión definitiva.
+
+
+# Uso de estadísticas para ver qué equipo tiene el mejor overall
+
+print(realmadrid["overall"].describe())
+print(barcelona["overall"].describe())
+
+Según las estadísticas, el Real Madrid tiene un "overall" promedio mayor que el FC Barcelona.
+
+
+# el club con los jugadores mejor valorados
+
+print(realmadrid["value_eur"].describe())
+
+plt.hist(realmadrid["value_eur"])
+plt.xlabel("Valor en 10x8 de millones de Euros")
+plt.yalbel("Frecuencia")
+plt.title("Valor en 10x8 de millones de Euros - Real Madrid")
+
+
+print(barcelona["value_eur"].describe())
+plt.hist(barcelona["value_eur"])
+plt.xlabel("Valor en 10x8 de millones de Euros")
+plt.yalbel("Frecuencia")
+plt.title("Valor en 10x8 de millones de Euros - FC Barcelona")
+
+
+# mostrar a los jugadores con valor sobre los EUR 500000000
+
+mostvalue_re = realmadrid[realmadrid["value_eur"] > 50000000]
+print(mostvalue_re)
+
+mostvalue_bz = barcelona[barcelona["value_eur"] > 50000000]
+print(mostvalue_bz)
+
+FC Barcelona tiene más jugadores con esos valores que Real Madrid
+
+
+# Relación de edades y valoraciones en 10x8 de millones de euros
+
+fifa20.plot(kind = "scatter", x = "age", y = "value_eur")
+
+El gráfico muestra que al tener una edad de entre 20 y 30 años es más probable tener un alto valor en el mercado, mientras que pasando la edad de 35, las probabilidades disminuyen mucho.
+
+
+# Jugadores más valiosos
+
+print(fifa20_1.describe())
+
+mostvalue_world = fifa20_1[fifa20_1["value_eur"] > 80000000]
+print(fifa20_1.shape)
+print(mostvalue_world.shape)
+print(mostvalue_world)
+
+
+# club que tiene los jugadores con los mejores salarios. Real Madrid vs Barcelona
+
+print(realmadrid["wage_eur"].describe())
+
+print(barcelona["wage_eur"].describe())
+
+best_wage_re = realmadrid[realmadrid["wage_eur"] > 80000000]
+print(best_wage_re)
+
+
+# El juagdor con los mejores salarios de FIFA 20
+
+print(fifa20_1["wage_eur"].describe())
+
+best_wage_world = fifa20_1[fifa20_1["wage_eur"] > 250000]
+print(best_wage_world)
+
+
+# Potencia en tiros largos
+
+plt.hist(fifa20_1["power_long_shots"])
+plt.xlabel("Potencia en tiros largos")
+plt.ylabel("Frecuencia")
+plt.title("Potencia en tiros largos")
+
+
+# Jugadores con mayor edad
+
+print(fifa20_1["age"].describe())
+
+# Jugadores con edad sobre los 40 años
+
+old_players = fifa20_1[fifa20_1["age"] > 40]
+print(old_players)
+
+
+# Relación de variables
+
+fifa20_2 = fifa20 [[""]
+
+
+
+

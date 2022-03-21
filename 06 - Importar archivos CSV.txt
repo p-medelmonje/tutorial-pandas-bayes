@@ -1,0 +1,34 @@
+==============================
+IMPORTAR ARCHIVOS CSV A PYTHON
+==============================
+
+Importar 3 librerías:
+
+import pandas as pd
+import numpy as np
+import os
+
+Trabajar con el archivo players_20.csv, copiado a otro directorio para facilitar la escritura de la ruta.
+
+Hay 3 maneras de importar este tipo de archivos:
+
+La primera no funcionó en Linux:
+
+fifa20 = pd.read_csv(".../asdf/players_20.csv") 
+
+fifa20.head(5) # mostrar las primeras 5 líneas
+
+
+Segunda manera:
+
+fifa20_i = pd.read_csv(filepath_or_buffer = "/home/pedro/asdf/players_20.csv")
+
+
+Tercera manera:
+
+mainpath = "/home/pedro"
+filename = "asdf/players_20.csv"
+fullpath = os.path.join(mainpath, filename)
+
+fifa20_ii = pd.read_csv(fullpath)
+

@@ -1,0 +1,65 @@
+========================================================================
+PRE-PROCESAMIENTO DE DATOS EN PYTHON: VARIABLES DUMMY (ONE HOT ENCODING)
+========================================================================
+
+Los modelos de Machine Learning necesitan procesar valores numéricos. En ciertos casos, vamos a realizar análisis en las que existen variables categóricas, por ejemplo: sexo, país, color, etc.
+
+Por esa razón, existe la técnica de ONE HOT ENCODING para convertir las variables categóricas en variables numéricas.
+
+Las categorías se convierten en 2 columnas. En el ejemplo del sexo, se desplegaría una columna para masculino (M) y una columna para femenino (F). En un caso de que sea hombre, se asigna 1 a M y 0 a F, y en el caso de que sea mujer, 1 a F y 0 a M.
+
+
+Código en Python:
+
+import pandas as pd
+import numpy as np
+
+dfhr = pd.read_csv(filepath_or_buffer = "/home/pedro/asdf/HRDataset_v14.csv")
+
+Crear otro dataset con columnas específicas:
+
+dfhr1 = dfhr[["Employee_Name", "PayRate", "Position", "State", "Sex", "DOB", "MaritalDesc", "CitizenDesc", "Department", "PerformanceScore","EngagementSurvey", "ExpSatisfaction"]]
+
+NOTA: En la versión actual del archivo, la columna "PayRate" no está. La reemplacé por "Salary".
+
+---
+
+Ejercicio de ONE HOT ENCODING utilizando la columna de sexo
+
+dummy_sex = pd.get_dummies(dfhr1["Sex"], prefix = "sex")
+
+dummy_sex.head()
+
+    sex_F	sex_M
+0	0	    1
+1	0	    1
+2	1	    0
+3	1	    0
+4	1	    0
+
+Se despliegan dos columnas con el prefijo que pusimos más una columna por cada valor dentro de la columna especificada. Ahora hace falta incluirlo dentro del dataset.
+
+Utilizamos drop para eliminar la columna "Sex", ya que no la vamos a utilizar. El parámetro axis = 1 es para especificar que es una columna.
+
+dfhr1 = dfhr1.drop(["Sex"], axis = 1)
+
+Ahora, añadimos las columnas dummies con .concat:
+
+dfhr2 = pd.concat([dfhr1, dummy_sex], axis = 1)
+
+---
+
+Otro ejemplo, pero automatizado. Esta vez, aplicado a la columna de la ciudadanía.
+
+def createdummies(df, varname):
+    dummy = pd.get_dummies(df[varname], prefix = varname)
+    df = df.drop(varname, axis = 1)
+    df = pd.concat([df, dummy], axis = 1)
+    return df
+
+createdummies(dfhr2, "CitizenDesc")
+
+
+
+
+

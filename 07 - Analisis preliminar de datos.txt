@@ -1,0 +1,23 @@
+=============================================================
+APLICAR UN ANÁLISIS PRELIMINAR DE DATOS PARA RECURSOS HUMANOS
+=============================================================
+
+import pandas as pd
+import numpy as np
+
+Importación de archivo csv HRDataset_v14.csv, descargado desde kaggle
+
+dfhr = pd.read_csv(filepath_or_buffer = "/home/pedro/asdf/HRDataset_v14.csv")
+
+dfhr.shape # para saber la cantidad de filas y columnas que tiene el dataset
+
+dfhr.dtypes # muestra los nombres de las columnas y el tipo de dato que tiene cada una
+
+Recordatorios: dfhr.head(x) para mostrar una cantidad de x resultados (o 5 si no se añade un parámetro) desde el principio, y dfhr.tail(x) para mostrar registros desde el final
+
+
+Seleccionar solo las columnas que nos interesan
+
+dfhr1 = dfhr[["Employee_Name", "Salary", "Position", "State", "Sex", "DOB", 
+              "MaritalDesc", "CitizenDesc", "Department", "PerformanceScore", 
+              "EngagementSurvey", "EmpSatisfaction"]]

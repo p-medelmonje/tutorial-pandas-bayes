@@ -1,0 +1,147 @@
+SERIES EN PANDAS
+
+import pandas as pd
+
+
+# creación de una serie sencilla
+
+obj = pd.Series([4,7,-5,3])
+obj
+
+0    4
+1    7
+2   -5
+3    3
+dtype: int64
+
+
+Automáticamente se le asigna índices, empezando desde 0
+
+
+obj.values # muestra los valores que contiene la serie
+
+array([ 4,  7, -5,  3])
+
+
+obj.index # muestra el índice inicial, el índice final y el paso de cada índice (en el ejemplo anterior, va de 1 en 1)
+
+RangeIndex(start=0, stop=4, step=1)
+
+
+Asignación de otros índices a la Serie
+
+obj2 = pd.Series([4,7,-5,3], index = ["d","b","a","c"])
+obj2
+
+d    4
+b    7
+a   -5
+c    3
+
+
+Selección o extracción de elementos
+
+obj2["a"]
+-5
+
+obj2["d"]
+4
+
+obj2["c", "a", "d"]
+c    3
+a   -5
+d    4
+
+
+Seleccionar valores con ciertos criterios
+
+obj2[obj2 > 0]
+d    4
+b    7
+c    3
+
+
+Operaciones sobre los elementos. Se aplica sobre todos los elementos
+
+obj2 * 2
+d     8
+b    14
+a   -10
+c     6
+
+
+Creación de Series a partir de diccionarios. Las claves de los diccionarios pasan a ser los índices.
+
+sdata = {"Ohio": 35000, "Texas": 71000, "Oregon": 16000, "Utah": 5000}
+obj3 = pd.Series(sdata)
+obj3
+
+Mo           1
+Aldebarán    2
+Saga         El caballero de Junini
+Shaka        6
+
+
+Crear una serie en el orden que nosotros queramos
+
+sdata = {"Ohio": 35000, "Texas": 71000, "Oregon": 16000, "Utah": 5000}
+estados = ["California", "Ohio", "Oregon", "Texas"]
+
+obj4 = pd.Series(sdata, index = estados)
+obj4
+
+California        NaN
+Ohio          35000.0
+Oregon        16000.0
+Texas         71000.0
+
+La serie, en el ejemplo anterior, se desplegó en el orden especificado en la lista
+
+
+Se puede utilizar cierto código para saber si un dato en la serie es un dato faltante o un dato válido. Existen valores vacíos. Por ejemplo, el valor de California es un valor faltante (Not a Number).
+
+pd.isnull(obj4) # se usa para encontrar valores faltantes.
+obj4.isnull() # hace lo mismo
+
+California     True
+Ohio          False
+Oregon        False
+Texas         False
+
+pd.notnull(obj4) # para mostrar los valores que no están vacíos.
+obj4.notnull() # hace lo mismo
+
+California    False
+Ohio           True
+Oregon         True
+Texas          True
+
+
+Operaciones entre Series. La operación empata o compara los índices y aplica la operación.
+
+obj3 + obj4
+
+California         NaN
+Ohio           70000.0
+Oregon         32000.0
+Texas         142000.0
+Utah               NaN
+
+No se hace la suma a California o Utah porque cada uno de esos índices está presente en solo una serie.
+
+
+Asignar nombres a las Series.
+
+obj4.name = "población"
+obj4.index.name = "Estado"
+obj4
+
+Estado
+California        NaN
+Ohio          35000.0
+Oregon        16000.0
+Texas         71000.0
+Name: población, dtype: float64
+
+
+
