@@ -1,0 +1,58 @@
+================================
+CÓMO HACER SORT_VALUES EN PANDAS
+================================
+
+En algunos casos vamos a tener que ordenar los valores de menor a mayor o viceversa. En otros, vamos a tener que cambiarle el nombre a las columnas.
+
+---
+El código:
+
+import pandas as pd
+import matplotlib.pyplot as plt
+
+
+Importar archivo
+
+fifa20 = pd.read_csv(filepath_or_buffer = "players_20.csv")
+
+
+Creación de un dataset simplificado
+
+fifa20_1 = fifa20[["short_name", "age", "height_cm", "weight_kg", "nationality", "club", "overall", "potential", "value_eur", "wage_eur", "player_positions", "power_jumping", "power_long_shots"]]
+
+---
+
+Ordenar de menor a mayor
+
+fifa20_1.sort_values("overall").head()
+
+---
+
+Ordenar de mayor a menor
+
+fifa20_1.sort_values("overall", ascending = False).head()
+
+
+Creación de dataset con datos del Real Madrid
+
+realmadrid = fifa20_1[fifa20_1["club"] == "Real Madrid"]
+
+
+Ordenar por "overall" de mayor a menor
+
+realmadrid.sort_values("overall", ascending = False).head()
+
+
+Ordenar por valor en Euros de mayor a menor
+
+realmadrid.sort_values("value_eur", ascending = False).head()
+
+---
+
+Cambiar nombre a columnas
+
+realmadrid.rename(columns = {"age":"edad"}).head()
+
+realmadrid.rename(columns = {"player_positions":"posición"}).head()
+
+
