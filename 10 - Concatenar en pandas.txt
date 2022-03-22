@@ -1,0 +1,77 @@
+====================
+CONCATENAR EN PANDAS
+====================
+
+La etapa de manipulación de datos es muy importante, porque es donde limpiamos los datos, dejando los que son apropiados para nuestros análisis.
+
+Algunos comandos:
+
+pd.melt(df): Reune columnas en filas
+
+df.pivot(columns='var', values='var'): Esparce filas en columnas
+
+pd.concat([df1, df2]): Añade filas de DataFrames
+
+pd.concat([df1, df2], axis=1): Añade columnas de DataFrames
+
+
+Hay ocasiones en que vamos a tener 2 tablas con las mismas columnas, y vamos a necesitar unirlas; o tener 2 tablas con diferentes columnas y unirlas igualmente. Ambas cosas se hacen de diferente manera.
+
+---
+El código:
+
+Importar librerías
+
+import pandas as pd
+import numpy as np
+
+Importar archivo:
+
+dfhr = pd.read_csv(filepath_or_buffer = "/home/pedro/asdf/HRDataset_v14.csv")
+
+Crear otro dataset:
+
+df = dfhr[["Employee_Name", "Salary", "PerformanceScore", "EngagementSurvey"]]
+
+NOTA: La columna "PayRate" no está en la versión actual del archivo csv, así que puse "Salary"
+
+Para utilizar solo las 6 primeras filas del dataset:
+
+df = df.head(6)
+
+
+---
+Crear otro dataset:
+
+df1 = dfhr[["Employee_Name", "Salary", "PerformanceScore", "EngagementSurvey"]]
+
+Seleccionar las filas de la 7 a la 12:
+
+df1 = df1.iloc[7:12]
+
+---
+Ejemplo de la función concat para unir los datos anteriores, suponiendo que vienen de DataFrames diferentes
+
+pd.concat([df, df1])
+
+---
+
+Creación otros datasets
+
+df5 = pd.concat([df, df1]) 
+
+df6 = df5[["Employee_Name"]]
+
+df7 = df5[["Salary", "PerformanceScore", "EngagementSurvey"]]
+
+
+Usar concat para unir columnas de diferentes datasets
+
+pd.concat([df6,df7], axis = 1)
+
+
+
+
+
+
+
