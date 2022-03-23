@@ -1,7 +1,11 @@
-## Eliminar columnas con la función DataFrame.drop
+## Eliminar columnas con la función DataFrame.drop  
+---
 
-**df.drop(columns = ['Length', 'Height'])**
+Sintaxis:
 
+`df.drop(columns = ['Length', 'Height'])`
+
+---
 ### Selección de filas
 
 **df[df.Length > 7]**  Extrae filas que cumplen la condición lógica
@@ -21,5 +25,43 @@
 **df.nlargest(n, 'value')** Selecciona y ordena las n mayores entradas
 
 **df.nsmallest(n, 'value')** Selecciona y ordena las n menores entradas
+
+---
+
+#### Continuación a partir del cuaderno 11
+
+`rm = realmadrid.drop(columns = ["short_name", "age"])`  
+
+#### Mostrar filas que cumplan un criterio  
+
+`realmadrid[realmadrid.overall > 88]`  
+
+`realmadrid[realmadrid.age > 30]`  
+
+`realmadrid[realmadrid.weight > 83]`  
+
+#### Selección aleatoria de filas (fracción)
+Ejemplo con el parámetro 0.1, que es como el 10% del total de filas:  
+
+`realmadrid.sample(frac = 0.1)`  
+
+#### Selección aleatoria de filas (número)
+Ejemplo que muestra 5 filas aleatorias:
+
+`realmadrid.sample(n=5)`
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
 
 
